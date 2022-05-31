@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "vDBpONuabbvgwqg6SJSh9EztaXivkesMlTO+xI6S1whLgZpPcxGf7pVdtDDuvpYbQbRpLOdC4nUXVUNwGsikug==",
+  "dgSpecHash": "EAFTIxDsavQxK/ghpX13GVcfWm/9RHFrtrPwp1rdmUSU4f6WT7uRmyf6+ekzMqegGZO+o7VmdFu7f50fwQn0SA==",
   "success": true,
   "projectFilePath": "C:\\Users\\ERIC\\desktop\\.netcore6projects\\hotellisting\\hotellisting.api\\HotelListing.api.csproj",
   "expectedPackageFiles": [
@@ -18,6 +18,7 @@
     "C:\\Users\\ERIC\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\6.0.5\\microsoft.aspnetcore.identity.entityframeworkcore.6.0.5.nupkg.sha512",
     "C:\\Users\\ERIC\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\6.0.5\\microsoft.aspnetcore.jsonpatch.6.0.5.nupkg.sha512",
     "C:\\Users\\ERIC\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\6.0.5\\microsoft.aspnetcore.mvc.newtonsoftjson.6.0.5.nupkg.sha512",
+    "C:\\Users\\ERIC\\.nuget\\packages\\microsoft.aspnetcore.mvc.versioning\\5.0.0\\microsoft.aspnetcore.mvc.versioning.5.0.0.nupkg.sha512",
     "C:\\Users\\ERIC\\.nuget\\packages\\microsoft.aspnetcore.razor.language\\6.0.0\\microsoft.aspnetcore.razor.language.6.0.0.nupkg.sha512",
     "C:\\Users\\ERIC\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\5.0.0\\microsoft.bcl.asyncinterfaces.5.0.0.nupkg.sha512",
     "C:\\Users\\ERIC\\.nuget\\packages\\microsoft.build\\17.0.0\\microsoft.build.17.0.0.nupkg.sha512",

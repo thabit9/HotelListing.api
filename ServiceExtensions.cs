@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Diagnostics;
 using Serilog;
 using HotelListing.api.DTO;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
+//using Microsoft.AspNetCore.Mvc;
 
 namespace HotelListing.api
 {
@@ -60,6 +63,17 @@ namespace HotelListing.api
                         }.ToString());
                     }
                 });
+            });
+        }
+
+        public static void ConfigureVersioning(this IServiceCollection services)
+        {
+            services.AddApiVersioning(opt => 
+            {
+                opt.ReportApiVersions = true;
+                opt.AssumeDefaultVersionWhenUnspecified = true;
+                opt.DefaultApiVersion = new ApiVersion(1, 0);
+                opt.ApiVersionReader  = new HeaderApiVersionReader("api-version");
             });
         }
     }

@@ -117,6 +117,9 @@ builder.Services.AddAutoMapper(typeof(MapperInitializer));
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IAuthManager, AuthManager>();
 
+//Register versioning for the api
+builder.Services.ConfigureVersioning();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

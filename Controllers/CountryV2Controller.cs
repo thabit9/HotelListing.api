@@ -7,14 +7,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HotelListing.api.Controllers
 {
-    [Route("api/[Controller]")]
+    //[ApiVersion("2.0")]
+    [ApiVersion("2.0", Deprecated = true)]
+    //[Route("api/country")]
+    [Route("api/{v:apiversion}/country")]
     [ApiController]
-    public class CountryController : ControllerBase
+    public class CountryV2Controller : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<CountryController> _logger;
         private readonly IMapper _mapper;
-        public CountryController(IUnitOfWork unitOfWork, ILogger<CountryController> logger,
+        public CountryV2Controller(IUnitOfWork unitOfWork, ILogger<CountryController> logger,
             IMapper mapper)
         {
             _unitOfWork = unitOfWork;

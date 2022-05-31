@@ -285,3 +285,6 @@ C:\users\eric\desktop\.netcore6projects\hotellisting\hotellisting.api\bin\Debug\
 C:\users\eric\desktop\.netcore6projects\hotellisting\hotellisting.api\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 C:\users\eric\desktop\.netcore6projects\hotellisting\hotellisting.api\bin\Debug\net6.0\Microsoft.Extensions.Identity.Core.dll
 C:\users\eric\desktop\.netcore6projects\hotellisting\hotellisting.api\bin\Debug\net6.0\Microsoft.Extensions.Identity.Stores.dll
+C:\Users\ERIC\desktop\.netcore6projects\hotellisting\hotellisting.api\bin\Debug\net6.0\JetBrains.Annotations.dll
+C:\Users\ERIC\desktop\.netcore6projects\hotellisting\hotellisting.api\bin\Debug\net6.0\X.PagedList.dll
+C:\Users\ERIC\desktop\.netcore6projects\hotellisting\hotellisting.api\bin\Debug\net6.0\X.PagedList.Mvc.Core.dll
