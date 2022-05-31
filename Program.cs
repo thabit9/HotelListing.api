@@ -19,6 +19,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<HotelContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("HotelConn")));
 
+//Add caching
+builder.Services.AddResponseCaching();
+
 #region Serilog method 1
 var logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
@@ -136,10 +139,10 @@ if (app.Environment.IsDevelopment())
 
 app.ConfigureExceptionHandler();
 app.UseHttpsRedirection();
-
+app.UseCors("AllowAll");  
+app.UseResponseCaching();
 app.UseRouting();
-app.UseStaticFiles();
-app.UseCors("AllowAll");      
+app.UseStaticFiles();    
 app.UseAuthentication();
 app.UseAuthorization();
 
