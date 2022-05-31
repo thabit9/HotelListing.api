@@ -1,9 +1,12 @@
+using HotelListing.api.Configurations;
 using HotelListing.api.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace HotelListing.api.Data.EFContext
 {
-    public class HotelContext : DbContext
+    public class HotelContext : IdentityDbContext<ApiUser>
     {
         public HotelContext(DbContextOptions<HotelContext> options) : base(options)
         {            
@@ -13,28 +16,25 @@ namespace HotelListing.api.Data.EFContext
         public DbSet<Hotel>? Hotels { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Country>().HasData(
-                new Country
-                {
-                    Id = 1,
-                    Name = "South Africa",
-                    ShortName = "RSA"
-                },
-                new Country
-                {
-                    Id = 2,
-                    Name = "Jamaica",
-                    ShortName = "JM"
-                },
-                new Country
-                {
-                    Id = 3,
-                    Name = "Bahamas",
-                    ShortName = "BS"
-                }
-            );
-            
-            builder.Entity<Hotel>().HasData(
+            base.OnModelCreating(builder);
+
+            #region Telling Identity To Change Table Names
+            /*
+            builder.Entity<IdentityRole<int>>().ToTable("Role");
+            builder.Entity<IdentityUser<int>>().ToTable("User");
+            builder.Entity<IdentityUserRole<int>>().ToTable("UserRole");
+            builder.Entity<IdentityUserClaim<int>>().ToTable("UserClaim");
+            builder.Entity<IdentityRoleClaim<int>>().ToTable("RoleClaim");
+            builder.Entity<IdentityUserLogin<int>>().ToTable("UserLogin");
+            builder.Entity<IdentityUserToken<int>>().ToTable("UserToken");
+            */
+            #endregion
+
+            builder.ApplyConfiguration(new RoleConfiguration());
+            builder.ApplyConfiguration(new CountryConfiguration());
+            builder.ApplyConfiguration(new HotelConfiguration());
+            #region Seeding Without Configuration
+            /*builder.Entity<Hotel>().HasData(
                 new Hotel
                 {
                     Id = 1,
@@ -67,7 +67,8 @@ namespace HotelListing.api.Data.EFContext
                     Rating = 5,
                     CountryId = 3
                 }
-            );
+            );*/
+            #endregion
         }
     }
 }

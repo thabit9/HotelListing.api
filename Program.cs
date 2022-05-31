@@ -1,12 +1,15 @@
+//using System.Configuration;
+using HotelListing.api;
 using HotelListing.api.Configurations;
 using HotelListing.api.Data.EFContext;
 using HotelListing.api.IRepository;
 using HotelListing.api.Repository;
+using HotelListing.api.Sevices;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using Serilog;
-//using Serilog.Events;
+using Serilog.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,14 +19,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<HotelContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("HotelConn")));
 
-//serilog method 1
+#region Serilog method 1
 var logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
     .Enrich.FromLogContext() 
     .CreateLogger();
 builder.Logging.ClearProviders();
 builder.Logging.AddSerilog(logger); 
-//Serilog method 2
+#endregion
+#region Serilog method 2
 /*Log.Logger = new LoggerConfiguration()
     .WriteTo.File(
         path: "../logs/webapi-.log",
@@ -31,20 +35,47 @@ builder.Logging.AddSerilog(logger);
         rollingInterval: RollingInterval.Day,
         restrictedToMinimumLevel: LogEventLevel.Information
     ).CreateLogger();*/
+#endregion
 
-//method 1
+#region  Newtonsoft Json Config Method 1
 /*builder.Services.AddControllers().AddNewtonsoftJson(s => {
     s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 });*/
-//method 2
+#endregion
+#region  Newtonsoft Json Config Method 2
 builder.Services.AddControllers().AddNewtonsoftJson(s => {
     s.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
 });
+#endregion
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme {
+        Description = @"JWT Authorization header using the Bearer scheme.
+        Enter  'Bearer' [space] and then your token in the text input belo.
+        Example: 'Bearer 12345abcdef '",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement(){
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference{
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                },
+                Scheme = "0auth2",
+                Name = "Bearer",
+                In = ParameterLocation.Header
+            },
+            new List<string>()
+        }
+    });
     c.SwaggerDoc("v1", new OpenApiInfo
     {
         Title = "Hotel Listing Api",
@@ -63,6 +94,12 @@ builder.Services.AddSwaggerGen(c =>
     c.IncludeXmlComments(xmlPath);*/
 });
 
+Configurationx config = new Configurationx();
+//Microsoft Identity
+builder.Services.AddAuthentication();
+builder.Services.ConfigureIdentity();
+builder.Services.ConfigureJWT(config.Configuration!);
+
 // http://docs.asp.net/en/latest/security/cors.html
 builder.Services.AddCors(options =>
 {
@@ -78,6 +115,7 @@ builder.Services.AddCors(options =>
 // Add Automapper service
 builder.Services.AddAutoMapper(typeof(MapperInitializer));
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IAuthManager, AuthManager>();
 
 var app = builder.Build();
 
@@ -93,6 +131,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+app.ConfigureExceptionHandler();
 app.UseHttpsRedirection();
 
 app.UseRouting();

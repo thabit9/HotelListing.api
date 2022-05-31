@@ -1,7 +1,9 @@
 using System.Linq.Expressions;
 using HotelListing.api.Data.EFContext;
+using HotelListing.api.DTO;
 using HotelListing.api.IRepository;
 using Microsoft.EntityFrameworkCore;
+using X.PagedList;
 
 namespace HotelListing.api.Repository
 {
@@ -26,7 +28,7 @@ namespace HotelListing.api.Repository
         public async Task<T> Get(Expression<Func<T, bool>> expression, List<string>? includes = null)
         {
             IQueryable<T> query = _db;
-            if(includes != null)
+            if (includes != null)
             {
                 foreach (var includeProperty in includes)
                 {
@@ -59,6 +61,22 @@ namespace HotelListing.api.Repository
             }
             return await query.AsNoTracking().ToListAsync();
         }
+
+        public async Task<IPagedList<T>> GetAll(RequestParams requestParams, List<string>? includes = null)
+        {
+             IQueryable<T> query = _db;
+            //check includes 
+            if(includes != null)
+            {
+                foreach (var includeProperty in includes)
+                {
+                    query = query.Include(includeProperty);
+                }
+            }
+            return await query.AsNoTracking()
+                .ToPagedListAsync(requestParams.PageNumber, requestParams.PageSize);
+        }
+
         public async Task Insert(T entity)
         {
             await _db.AddAsync(entity);
